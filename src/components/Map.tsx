@@ -1,6 +1,6 @@
 /* global kakao */
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, ReactChild } from "react"
 import { konoAPI } from "../api"
 import { IKonoList } from '../shared-interfaces'
 
@@ -9,6 +9,9 @@ declare global {
         kakao: any;
     }
 }
+
+
+const callout = (name: string): string => `<div style="position:relative; bottom: 20px; padding:4px; border-radius: 4px; left:70px; background: white">${name}</div>`
 
 const Map: React.FC = () => {
 
@@ -47,21 +50,28 @@ const Map: React.FC = () => {
                 let { x, y, name } = place
                 console.log(name)
                 let latlng = new window.kakao.maps.LatLng(y, x)
-
                 let marker = new window.kakao.maps.Marker({
                     map: map, // 마커를 표시할 지도
                     position: latlng,
                     title: name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                 });
 
-                var infowindow = new window.kakao.maps.InfoWindow({
+                // let infowindow = new window.kakao.maps.InfoWindow({
+                //     position: latlng,
+                //     content: callout(name)
+                // });
+                marker.setMap(map)
+
+                let customOverlay = new window.kakao.maps.CustomOverlay({
                     position: latlng,
-                    content: `<div style="padding: 4px; ">${name}</div>`
+                    map: map,
+                    yAnchor: 1,
+                    content: callout(name)
                 });
 
                 // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-                infowindow.open(map, marker);
-                marker.setMap(map)
+                // infowindow.open(map, marker);
+                // customOverlay.setMap(map);
             })
         }
     }, [konoList])
