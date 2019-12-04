@@ -11,7 +11,7 @@ declare global {
 }
 
 
-const callout = (name: string): string => `<div style="position:relative; bottom: 20px; padding:4px; border-radius: 4px; left:70px; background: white">${name}</div>`
+const callout = (name: string): string => `<div style="position:relative; top: 40px; padding:6px; border-radius: 16px; background: rgba(255, 255, 255, 0.9);">${name}</div>`
 
 const Map: React.FC = () => {
 
